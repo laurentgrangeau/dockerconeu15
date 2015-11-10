@@ -1,0 +1,8 @@
+cassandra-master:
+  image: cassandra
+cassandra-slave:
+  image: cassandra
+  links:
+    - cassandra-master:seed
+  environment:
+    - CASSANDRA_SEEDS=seed
