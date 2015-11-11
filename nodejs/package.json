@@ -10,7 +10,7 @@
   "author": "Laurent Grangeau",
   "license": "ISC",
   "dependencies": {
-    "cassandra-driver": "^2.2.2",
+    "mongodb": "^2.0.48",
     "express": "^4.13.3"
   }
 }

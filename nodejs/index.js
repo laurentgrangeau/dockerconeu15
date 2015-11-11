@@ -1,24 +1,40 @@
 var express = require('express');
-var cassandra = require('cassandra-driver');
-var async = require ('async');
+var mongodb = require('mongodb');
 
 var app = express();
-
-var client = new cassandra.Client( { contactPoints : [ process.env.HOST ] } );
-client.connect(function(err, result) {
-    console.log('Connected.');
-});
+var client = mongodb.MongoClient;
+var url = process.env.HOST;
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
 });
 
-app.get('/metadata', function(req, res) {
-    console.log('Host: %s', process.env.HOST);
-    res.send(client.hosts.slice(0).map(function (node) {
-        return { address : node.address, rack : node.rack, datacenter : node.datacenter }
-    }));
+app.get('/mongo', function (req, res) {
+  client.connect(url, function (err, db) {
+    if (err) {
+      res.send(err);
+    } else {
+      var hits = db.collection('hits');
+      var hit = { ip: '', time: '' };
+
+      hits.insert(hit, function (err, result) {
+        if (err) {
+	  res.send(err);
+	} else {
+	  hits.count(function (err, count) {
+	    if (err) {
+	      res.send(err);
+	    } else {
+	      res.send('<h1>You are the %s visitor</h1>', count);
+	      db.close();
+	    }
+	  });
+	}
+      });
+    }
+  });
 });
+
 
 var server = app.listen(8888, function () {
   var host = server.address().address;

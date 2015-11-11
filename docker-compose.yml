@@ -9,10 +9,10 @@ api:
   build: ./nodejs
   container_name: "nodejs"
   environment:
-    - HOST=cassandra
+    - HOST=mongodb://mongo:27017/dockerconeu
     - "contraint:environment==middleend"
 db:
-  image: cassandra
-  container_name: "cassandra"
+  image: mongo
+  container_name: "mongo"
   environment:
     - "contraint:environment==backend"
