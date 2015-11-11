@@ -1,9 +1,0 @@
-api:
-  build: .
-  ports:
-    - "8888:8888"
-  environment:
-    - HOST=cassandra
-db:
-  image: cassandra
-  container_name: "cassandra"

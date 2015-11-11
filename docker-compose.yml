@@ -1,8 +1,18 @@
-cassandra-master:
-  image: cassandra
-cassandra-slave:
-  image: cassandra
-  links:
-    - cassandra-master:seed
+front:
+  build: ./nginx
+  container_name: "nginx"
+  ports:
+    - 8888:80
   environment:
-    - CASSANDRA_SEEDS=seed
+    - "contraint:environment==frontend"
+api:
+  build: ./nodejs
+  container_name: "nodejs"
+  environment:
+    - HOST=cassandra
+    - "contraint:environment==middleend"
+db:
+  image: cassandra
+  container_name: "cassandra"
+  environment:
+    - "contraint:environment==backend"
