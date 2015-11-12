@@ -6,8 +6,8 @@ front:
   environment:
     - "contraint:environment==frontend"
 api:
-  build: ./nodejs
-  container_name: "nodejs"
+  build: ./python
+  container_name: "python"
   environment:
     - HOST=mongodb://mongo:27017/dockerconeu
     - "contraint:environment==middleend"
