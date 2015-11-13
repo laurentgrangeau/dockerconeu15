@@ -1,5 +1,14 @@
-FROM nginx
+FROM nginx:1.9.5
 
-ADD default.conf /etc/nginx/conf.d
+WORKDIR ["/tmp"]
+RUN apt-get update && apt-get install -y wget unzip
+RUN wget https://releases.hashicorp.com/consul-template/0.11.1/consul-template_0.11.1_linux_amd64.zip
+RUN unzip consul-template_0.11.1_linux_amd64.zip
+
+ADD service.ctmpl /tmp
+ADD start.sh /bin/start.sh
+RUN chmod a+x /bin/start.sh
+
+ENTRYPOINT ["/bin/start.sh"]
 
 EXPOSE 80

@@ -4,8 +4,8 @@ import os
 import datetime
 
 app = Flask(__name__)
-mongo = MongoClient(host=os.environ.get('MONGO_HOST', 'mongo'), port=27017)
-db = mongo['test']
+mongo = MongoClient(host=os.environ.get('HOST'), port=27017)
+db = mongo['dockerconeu']
 
 @app.route('/')
 def hello():

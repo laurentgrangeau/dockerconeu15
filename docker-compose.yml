@@ -4,15 +4,14 @@ front:
   ports:
     - 8888:80
   environment:
-    - "contraint:environment==frontend"
+    - "constraint:node==swarm-master"
 api:
   build: ./python
-  container_name: "python"
   environment:
-    - HOST=mongodb://mongo:27017/dockerconeu
-    - "contraint:environment==middleend"
+    - "constraint:node==swarm-slave2"
+    - HOST=mongo
 db:
   image: mongo
   container_name: "mongo"
   environment:
-    - "contraint:environment==backend"
+    - "constraint:node==swarm-slave3"
