@@ -4,14 +4,11 @@ front:
   ports:
     - 8888:80
   environment:
-    - "constraint:node==swarm-master"
+    - KVSTORE=192.168.99.127:8500
 api:
   build: ./python
   environment:
-    - "constraint:node==swarm-slave2"
     - HOST=mongo
 db:
   image: mongo
   container_name: "mongo"
-  environment:
-    - "constraint:node==swarm-slave3"
