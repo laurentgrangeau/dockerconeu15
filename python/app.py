@@ -3,14 +3,14 @@ from pymongo import MongoClient
 import os
 import datetime
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path = "", static_folder = "/code/static")
 mongo = MongoClient(host=os.environ.get('HOST'), port=27017)
 db = mongo['dockerconeu']
 
 @app.route('/')
 def hello():
   db.hits.insert({"ip": request.remote_addr, "ts": datetime.datetime.utcnow()})
-  return '<h1>This page has been visited %s times!</h1>' % db.hits.count()
+  return '<center><img src="/engine.png" /><h1>Welcome Barcelona !</h1><h2>You are the visitor #%s.</h2></center>' % db.hits.count()
 
 @app.route('/api')
 def hello_api():
